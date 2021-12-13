@@ -1,0 +1,470 @@
+﻿<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/color/navy.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uevent@2/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.min.js"></script>
+
+
+<link rel="stylesheet" href="css/responsive.css">
+
+<title>TattooFY | Reach Us</title>
+
+<link href="images/favicon.png" sizes="128x128" rel="shortcut icon" type="image/x-icon" />
+<link href="images/favicon.png" sizes="128x128" rel="shortcut icon" />
+
+<style>
+        .hide {
+            display: none !important;
+        }
+
+        .show {
+            display: inline-block !important;
+        }
+    </style>
+<script type="text/javascript" src="../cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
+<link href="../cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="../cdn.jsdelivr.net/json2/0.1/json2.js"></script>
+<script>
+        $(document).ready(function () {
+            $(document).ajaxStart(function () {
+                $("#wait").css("display", "block");
+            });
+            $(document).ajaxComplete(function () {
+                $("#wait").css("display", "none");
+            });
+        });
+    </script>
+<script type="text/javascript">
+        $(function () {
+            $("[id*=btnSubmit]").bind("click", function () {
+                var msg = Validation();
+                if (msg < 1) {
+                    $("[id*=btnSubmit]").removeClass("show");
+                    $("[id*=btnSubmit]").addClass("hide");
+                    ContactFormEvents('Submit');
+                }
+                else {
+                    alert(msg);
+                }
+            });
+        });
+
+        function ContactFormEvents(evnt) {
+            var contactfrm = {};
+            contactfrm.name = $("[id*=txtName]").val();
+            contactfrm.email = $("[id*=txtEmail]").val();
+            contactfrm.mob = $("[id*=txtMob]").val();
+            contactfrm.sub = $("[id*=txtSub]").val();
+            contactfrm.message = $("[id*=txtMsg]").val();
+            contactfrm.Evnt = evnt.trim();
+            if (contactfrm.Evnt.trim() != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "Admin/AllAction.aspx/SaveContactForm",
+                    data: '{contactfrm: ' + JSON.stringify(contactfrm) + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.d == "1") {
+                            swal("Success !", "Dear, " + $("[id*=txtName]").val() + ", Thank you for Contact with us, We will contact you soon.", "success");
+                            $("[id*=btnSubmit]").removeClass("hide");
+                            $("[id*=btnSubmit]").addClass("show");
+                            reset();
+                        }
+                        else if (response.d == "-1") {
+                            swal("Warning !", "Action Not Completed Successfully ", "warning");
+                            $("[id*=btnSubmit]").removeClass("hide");
+                            $("[id*=btnSubmit]").addClass("show");
+                        }
+                        else if (response.d == "-2") {
+                            swal("Error !", "There is some technical error. Please Try Again !", "error");
+                            $("[id*=btnSubmit]").removeClass("hide");
+                            $("[id*=btnSubmit]").addClass("show");
+                        }
+                        else if (response.d == "-4") {
+                            swal("Warning !", "All * fields are Required", "error");
+                            $("[id*=btnSubmit]").removeClass("hide");
+                            $("[id*=btnSubmit]").addClass("show");
+                        }
+                        else if (response.d != "0") {
+                            swal("Success !", "Dear, " + $("[id*=txtName]").val() + ", Thank you for Contact with us, We will contact you soon.", "success");
+                            $("[id*=btnSubmit]").removeClass("hide");
+                            $("[id*=btnSubmit]").addClass("show");
+                            reset();
+                        }
+                    }
+                });
+            }
+            else
+                swal("Warning !", "* Fields are Requird", "warning");
+            return false;
+        };
+
+        function Validation() {
+            var name = $("[id*=txtName]").val();
+            var email = $("[id*=txtEmail]").val();
+            var mob = $("[id*=txtMob]").val();
+            var sub = $("[id*=txtSub]").val();
+            var message = $("[id*=txtMsg]").val();
+            var msg = "";
+            if (name.length < 1) {
+                msg = msg + "Enter Name\n";
+            }
+            if (email.length < 1) {
+                msg = msg + "Enter Email\n";
+            }
+            if (mob.length < 1) {
+                msg = msg + "Enter Mobile Number\n";
+            }
+            if (sub.length < 1) {
+                msg = msg + "Enter Subject\n";
+            }
+            if (message.length < 1) {
+                msg = msg + "Enter Message\n";
+            }
+            return msg;
+        }
+
+        function reset() {
+            $("[id*=txtName]").val('');
+            $("[id*=txtEmail]").val('');
+            $("[id*=txtMob]").val('');
+            $("[id*=txtSub]").val('');
+            $("[id*=txtMsg]").val('');
+        }
+
+        $(function () {
+            $("[id*=btnReset]").bind("click", function () {
+                reset();
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+<div class="wrapper">
+<div class="header-top">
+<div class="container">
+<div class="row">
+<div class="col-md-4"></div>
+
+<div class="col-md-4">
+<div class="welcm-ht text-center">
+<p class="ulockd-welcntxt">Welcome To TattooFY</p>
+</div>
+</div>
+<div class="col-md-2"></div>
+
+<div class="col-md-2">
+<div class="social-linked">
+<ul class="list-inline">
+<li><a href="" target="_blank"><i class="fa fa-facebook"></i></a></li>
+<li><a href="" target="_blank"><i class="fa fa-instagram"></i></a></li>
+<li><a href="" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+<li><a href="" target="_blank"><i class="fa fa-twitter"></i></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header-middle">
+<div class="container">
+<div class="row">
+<div class="col-xxs-12 col-xs-6 col-sm-6 col-md-3">
+<div class="welcm-header-middle tac-md">
+<a href="index.html" class="ulockd-main-logo"><img src="images/TattooFY.png" class="logo logo-display hidden-md" alt="logo.png" style="transform:translateY(-50px)" height="220" width="220"></a>
+</div>
+</div>
+<div class="col-xxs-12 col-xs-6 col-sm-6 col-md-3">
+<div class="ulockd-ohour-info style2 mb305-xsd text-center">
+<div class="ulockd-icon text-thm2"><span class="flaticon-email-filled-closed-envelope"></span></div>
+<div class="ulockd-info">
+<h3>Mail Us</h3>
+<p class="ulockd-addrss"><strong>Email:</strong>nikkikkc04@gmail.com</span></a></p>
+</div>
+</div>
+</div>
+<div class="col-xxs-12 col-xs-6 col-sm-6 col-md-3">
+<div class="ulockd-ohour-info style2 text-center">
+<div class="ulockd-icon text-thm2"><span class="flaticon-old-handphone"></span></div>
+<div class="ulockd-info">
+<h3>Call Us</h3>
+<p class="ulockd-addrss"><a href="tel:+91-8319032699">+91-8319032699</a></p>
+</div>
+</div>
+</div>
+<div class="col-xxs-12 col-xs-6 col-sm-6 col-md-3">
+<div class="ulockd-ohour-info style2 text-center">
+<div class="ulockd-icon text-thm2"><i class="fa fa-whatsapp" aria-hidden="true"></i></div>
+<div class="ulockd-info">
+<h3>Whatsapp</h3>
+<p><a href="https://api.whatsapp.com/send?phone=+918319032699&amp;text=Hi,%20I%20would%20like%20to%20get%20more%20information.">+91-8319032699</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<header class="header-nav">
+<div class="main-header-nav navbar-scrolltofixed">
+<div class="container">
+<nav class="navbar navbar-default bootsnav menu-style1">
+<div class="container ulockd-pdng0">
+
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+<i class="fa fa-bars"></i>
+</button>
+</div>
+
+
+<div class="collapse navbar-collapse pad330-md" id="navbar-menu">
+<ul class="nav navbar-nav navbar-left" data-in="flipInX">
+<li> <a href="index.html" class="active"> Home </a> </li>
+
+<li> <a href="services.html">Services</a> </li>
+
+<li> <a href="reachus.html">Contact Us</a></li>
+</ul>
+
+
+</div>
+</div>
+</nav>
+</div>
+</div>
+</header>
+
+<div class="ulockd-inner-reachus" style="background:url(images/contact.jpg);background-repeat:no-repeat;background-size:cover;background-attachment:fixed;background-position:0px -300px">
+<div class="container text-center">
+<div class="row">
+<div class="inner-conraimer-details">
+<div class="col-md-12">
+<h1 class="text-uppercase">TattooFY Reach Us</h1>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="ulockd-team-one">
+<div class="container">
+<div class="row">
+<div class="col-md-12 text-center">
+<div class="ulockd-main-title">
+<h2 class="text-thm2">Reach Us</h2>
+<p class="fz20">We respond very fast! <br>Fill up the following Inquiry Form to get a Quote or for any other query regarding your Function.</p>
+<img src="images/resource/Candid-Wedding-Photographer.png" alt="Candid-Wedding-Photographer.png">
+<br>
+<br>
+<br>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-sm-6 col-md-6">
+<div class="contact-right">
+<h3>Contact information</h3>
+<h4>TattooFY</h4>
+<div class="contact-details">
+<p><i class="fa fa-map-marker"></i> Somewhere Under THe SKY..</p>
+<div class="single-contact">
+<h4>Email Us</h4>
+<a href="#"><span>[nikkikkc04@gmail.com]</span></a>,<span class="__cf_email__" >[nikkikkc04@gmail.com]</span></a>
+</div>
+<div class="single-contact">
+<h4>Call Us</h4>
+<a href="tel:8319032699">+91-8319032699</a>, <a href="#">+91-8319032699</a>
+</div>
+<div class="social-links-contact">
+<h4>Follow Us:</h4>
+<ul>
+<li><a href="" target="_blank"><i class="fa fa-facebook"></i></a></li>
+<li><a href="" target="_blank"><i class="fa fa-instagram"></i></a></li>
+<li><a href="" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+<li><a href="" target="_blank"><i class="fa fa-twitter"></i></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-xs-12 col-sm-6 col-md-6">
+<div class="contact-left">
+<h3>Get in touch</h3>
+<div>
+<div class="row">
+<div class="col-md-6">
+<div class="single-contact-field">
+<input id="txtName" type="text" placeholder="Your Name" />
+</div>
+</div>
+<div class="col-md-6">
+<div class="single-contact-field">
+<input id="txtEmail" type="email" placeholder="Email Address" />
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">
+<div class="single-contact-field">
+<input id="txtSub" type="text" placeholder="Subject" />
+</div>
+</div>
+<div class="col-md-6">
+<div class="single-contact-field">
+<input id="txtMob" type="text" placeholder="Phone Number" />
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<div class="single-contact-field">
+<textarea id="txtMsg" placeholder="Write here your message"></textarea>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<div class="single-contact-field">
+<button id="btnSubmit" type="submit" class="btn btn-lg ulockd-btn-thm2"> Submit
+</button>
+<div id="wait" style="display: none; position: absolute; top: 89%; left: 20%; padding: 2px;">
+<img src="img/loading.gif" /> Please Wait ..
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="container-fluid ulockd-padz">
+<div class="row">
+  <h3 style="position:relative;left:40%;font-size:30px">360 view Our studio</h3>
+<div class="col-md-12">
+<div id="viewer" style="width: 100vw; height: 80vh;"></div>
+</div>
+</div>
+</div>
+
+<section class="ulockd-footer ulockd-pdng0" style="background-attachment:fixed">
+  <div class="container footer-padding">
+    <div class="row1 ulockd-pdng10">
+      <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-4">
+        <div class="logo-widget tac-xxsd">
+            <img src="images/TattooFY.png" alt="footer-logo.png"  height="280" width="280">
+        </div>
+      </div>
+      <div class="col-xxs-12 col-xs-6 col-md-offset-4 col-sm-4 col-md-4">
+        <div class="font-icon-social text-center">
+          <ul class="list-inline footer-font-icon">
+            <li><a href="" target="_blank"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="" target="_blank"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+            <li><a href="" target="_blank"><i class="fa fa-twitter"></i></a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <div class="row1 ulockd-pdng15">
+      <div class="col-xxs-12 col-xs-6 col-sm-6 col-md-4">
+        <div class="widget-about">
+          <h3>TattooFY</h3>
+          <p style="text-align: justify;">
+            TattooFY is always committed to providing a level of quality & professionalism born out of our asthetic work, that will go far beyond your expectations. We surely understand and appreciate the amount of endeavour that you make into
+            wanting your First Tattoo  and we want to create and grab all the aritistic details we can pour via our Ink with such a tenacity to get it perfect.
+          </p>
+        </div>
+      </div>
+      <div class="col-xxs-12 col-xs-6 col-sm-6 col-md-4">
+        <div class="link-widget">
+          <h3>Useful Links</h3>
+          <ul class="list-style-square">
+            <li><a href="reachus.html">Reach-Us</a></li>
+            <li><a href="services.html">Services</a></li>
+
+
+
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="ulockd-copy-right">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="color-white">TattooFY by Nikki Singh Copyright ©2021. All rights are reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<a class="scrollToHome ulockd-bgthm" href="#"><i class="fa fa-arrow-up"></i></a>
+</div>
+
+<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootsnav.js"></script>
+<script type="text/javascript" src="js/parallax.js"></script>
+<script type="text/javascript" src="js/scrollto.js"></script>
+<script type="text/javascript" src="js/jquery-scrolltofixed-min.js"></script>
+<script type="text/javascript" src="js/jquery.counterup.js"></script>
+<script type="text/javascript" src="js/gallery.js"></script>
+<script type="text/javascript" src="js/wow.min.js"></script>
+<script type="text/javascript" src="js/slider.js"></script>
+<script type="text/javascript" src="js/video-player.js"></script>
+<script type="text/javascript" src="js/jflickrfeed.min.js"></script>
+<script type="text/javascript" src="js/jquery.barfiller.js"></script>
+<script type="text/javascript" src="js/timepicker.js"></script>
+<script type="text/javascript" src="js/tweetie.js"></script>
+
+<script type="text/javascript" src="js/script.js"></script>
+<script>
+var viewer = new PhotoSphereViewer.Viewer({
+ container: document.querySelector('#viewer'),
+ panorama: 'https://images.squarespace-cdn.com/content/v1/57462a14d210b8382f2dd71e/1602707391948-KB3UHJNV1BJWJJS3NHIW/FrontLeftBooth_2_2x3.jpg?format=2500w',
+ lang: {
+    autorotate: 'Automatic rotation',
+    zoom      : 'Zoom',
+    zoomOut   : 'Zoom out',
+    zoomIn    : 'Zoom in',
+    move      : 'Move',
+    download  : 'Download',
+    fullscreen: 'Fullscreen',
+    menu      : 'Menu',
+    twoFingers: 'Use two fingers to navigate',
+    ctrlZoom  : 'Use ctrl + scroll to zoom the image',
+    loadError : 'The panorama can\'t be loaded'
+
+},
+  mousewheel:false,
+  autorotateDelay:100
+}
+);
+</script>
+</body>
+
+</html>
