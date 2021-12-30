@@ -63,6 +63,9 @@
 
         function ContactFormEvents(evnt) {
             var contactfrm = {};
+            setTimeout(function(){
+                swal("Success !", "Dear, " + $("[id*=txtName]").val() + ", Thank you for Contact with us, We will contact you soon.", "success");
+            },1600)
             contactfrm.name = $("[id*=txtName]").val();
             contactfrm.email = $("[id*=txtEmail]").val();
             contactfrm.mob = $("[id*=txtMob]").val();
@@ -342,7 +345,7 @@
 <div class="row">
 <div class="col-md-12">
 <div class="single-contact-field">
-<button id="btnSubmit" type="submit" class="btn btn-lg ulockd-btn-thm2"> Submit
+<button id="btnSubmit" type="submit" onclick="ContactFormEvents(event)" class="btn btn-lg ulockd-btn-thm2"> Submit
 </button>
 <div id="wait" style="display: none; position: absolute; top: 89%; left: 20%; padding: 2px;">
 <img src="img/loading.gif" /> Please Wait ..
