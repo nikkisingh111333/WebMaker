@@ -64,7 +64,13 @@
         function ContactFormEvents(evnt) {
             var contactfrm = {};
             setTimeout(function(){
+              if( $("[id*=txtName]").val()!='' && $("[id*=txtEmail]").val()!=''&&$("[id*=txtMob]").val()!=''&&$("[id*=txtSub]").val()!=''&&$("[id*=txtMsg]").val()!=''){
                 swal("Success !", "Dear, " + $("[id*=txtName]").val() + ", Thank you for Contact with us, We will contact you soon.", "success");
+              }
+              else {
+                swal("You can't Leave any Text bars Empty", "Fill them Now ,pal!");
+
+              }
             },1600)
             contactfrm.name = $("[id*=txtName]").val();
             contactfrm.email = $("[id*=txtEmail]").val();
