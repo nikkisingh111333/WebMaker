@@ -2,6 +2,9 @@
 <html lang="en-US">
 
 <head>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js" integrity="sha512-0bCDSnaX8FOD9Mq8WbHcDwshXwCB5V4EP+UBu87WQgga2b7lAsuEbaSmIZjH/XEmNhJuhrPbFHemre5HZwrk9w==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie_svg.min.js" integrity="sha512-dbFiej6dN6NDTJ8dPpy0QlgGFxeFjkaYDWIzY5PciK5O6ZKb9WwiQmTJ0BzzhS4fAved+0buPW45H9h+6SfgNQ==" crossorigin="anonymous"></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131485826-1"></script>
@@ -353,7 +356,7 @@
     }
 
     .submit {
-      background-color: #08d;
+      background-color:gold;
       border-radius: 12px;
       border: 0;
       box-sizing: border-box;
@@ -505,7 +508,7 @@
             </div>
           </div>
 
-          <div class="full_width" style="background-color: #e6e7e9">
+          <div class="full_width" style="background-color: #e6e7e9;height:300px">
             <div class="full_width_inner">
               <div class="vc_row wpb_row section" style=' text-align:left;'>
                 <div class=" full_section_inner clearfix" style='padding-left: 0px;padding-right: 0px'>
@@ -537,7 +540,9 @@
                             <div class="wpb_wrapper">
                               <h2>Reach Us .....!!</h2>
                               <div class="line"><img src="https://associatedalcohols.com/wp-content/uploads/2018/08/linepng.png" /></div>
-                              <p>Fill up this form and we will Contact you soon for further enquiry: thank you for showing interest</p>
+                              <p style="line-height: 1.8;font-size:40px">Fill up this form and we will Contact you soon</p>
+
+                            <p style="line-height: 1.8;font-size:40px"> for further enquiry: thank you for showing interest</p>
 
                             </div>
                           </div>
@@ -565,7 +570,7 @@
                                       </div>
                                     </div>
 
-                                    <div class="form" style="transform:scale(1.2,1.4) translateY(120px);">
+                                    <div class="form" style="transform:scale(1.8,1.6) translateY(120px);">
 
                                       <div class="input-container ic1">
                                         <input id="firstname" class="input" type="text" placeholder=" " />
@@ -587,7 +592,12 @@
                                         <div class="cut" ></div>
                                         <label for="email" class="placeholder">Mobile-No</>
                                       </div>
-                                      <button type="text" class="submit">submit</button>
+                                      <div class="input-container ic2">
+                                        <textarea id="email" class="input" placeholder=" " rows="50" cols="30"></textarea>
+                                        <div class="cut" ></div>
+                                        <label for="email" class="placeholder">Your Query</>
+                                      </div>
+                                      <button type="text" class="submit" >submit</button>
                                     </div>
                                   </div>
                                 </div>
@@ -599,14 +609,36 @@
                                 <div class="wpb_wrapper">
                                   <div class="wpb_single_image wpb_content_element vc_align_left">
                                     <div class="wpb_wrapper">
+                                     <div id="svg" style="position:relative;left:170%;transform:translateY(-440px);z-index:2">
 
-                                      <div class="vc_single_image-wrapper   vc_box_border_grey" style="position:relative;left:210%;transform:scale(1.5,1.9) translateY(-150px);"><img width="366" height="255"
+                                     </div>
+                                      <div class="vc_single_image-wrapper   vc_box_border_grey" style="position:relative;left:210%;transform:scale(1.6,2.1) translateY(-290px);perspective: 500px;
+                                      perspective-origin: left;">
+                                        <img width="366" height="255" style="transform-style: preserve-3d;transform:rotateX(60deg)"
                                           src="https://www.99acres.com/microsite/wp-content/blogs.dir/9363/files/2015/06/loc-md.jpg" class="vc_single_image-img attachment-large" alt=""
                                           srcset="https://www.99acres.com/microsite/wp-content/blogs.dir/9363/files/2015/06/loc-md.jpg 366w,https://www.99acres.com/microsite/wp-content/blogs.dir/9363/files/2015/06/loc-md.jpg 241w"
-                                          sizes="(max-width: 366px) 100vw, 366px" /></div>
+                                          sizes="(max-width: 366px) 100vw, 366px" />
+
+                                              <h2 style="color:gold;">We Operate From Nagpur</h2>
+                                        </div>
+
                                     </div>
                                   </div>
+                                  <script>
 
+                                  const svg = document.querySelector('#svg')
+                                  var anim = bodymovin.loadAnimation({
+
+                                    wrapper: svg,
+                                    animType: "svg",
+                                    loop: true,
+                                    hover: true,
+                                    autoplay: true,
+                                    path: "https://assets10.lottiefiles.com/packages/lf20_4xw7yai4.json"
+                                  })
+                                  anim.playSpeed = 1.5
+                                  anim.play()
+                                  </script>
 
                                 </div>
                               </div>
