@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas to WebSocket</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.min.js" integrity="sha512-lvddmeF7aHRJwdbJeYThWd5kWSjTrXBzCRF/jYROiHzmhMJ1dEXfGH5Q7ft0yhizXTopAETG03s5ajTflauijA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <button id="sendButton">Send Image</button>
+    <canvas id="canV" height="400" width="700"></canvas>
+    <script>
+        var canV=''
+        function setup() {
+        // Create the canvas
+        canV=createCanvas(700, 400,document.getElementById("canV"));
+    
+        console.log(canV)
+        //document.body.appendChild(canV)
+        
+        console.log(document.getElementById("canV"))
+        // Set background to black
+        background(0);
+
+        // Set width of the lines
+        strokeWeight(10);
+
+        // Set color mode to hue-saturation-brightness (HSB)
+        colorMode(HSB);
+
+        // Set screen reader accessible description
+        describe('A blank canvas where the user draws by dragging the mouse');
+        }
+
+        function mouseDragged() {
+        // Set the color based on the mouse position, and draw a line
+        // from the previous position to the current position
+        let lineHue = mouseX - mouseY;
+        stroke(lineHue, 90, 90);
+        line(pmouseX, pmouseY, mouseX, mouseY);
+        }
+
+    </script>
+    <script>
+        
+        const canvas =document.getElementById("canV");
+        const context = canvas.getContext('2d');
+        const ws = new WebSocket('ws://localhost:8080'); // Replace with your WebSocket server URL
+
+        // Example drawing on canvas
+        // context.fillStyle = '#FF0000';
+        // context.fillRect(50, 50, 200, 200);
+
+        // Function to send the canvas image via WebSocket
+        function sendCanvasImage() {
+            // Convert the canvas to a data URL (base64 encoded image)
+            canvas.toBlob(function(blob) {
+                // Check if the WebSocket connection is open
+                if (ws.readyState === WebSocket.OPEN) {
+                    // Send the blob as binary data
+                    console.log(blob)
+                    const imageData = canvas.toDataURL('image/png');
+                    console.log(imageData)
+                  //  ws.send(["nik",imageData]);
+                    ws.send(imageData)
+                    console.log('Canvas image sent!');
+                } else {
+                    console.log('WebSocket connection is not open.');
+                }
+            }, 'image/png');
+        }
+
+        // Event listener for the button
+        document.getElementById('sendButton').addEventListener('click', sendCanvasImage);
+
+        // WebSocket event listeners
+        ws.onopen = function() {
+            console.log('WebSocket connection opened.');
+        };
+
+        ws.onclose = function() {
+            console.log('WebSocket connection closed.');
+        };
+
+        ws.onerror = function(error) {
+            console.error('WebSocket error:', error);
+        };
+
+        ws.onmessage = function(event) {
+            console.log('Received from server:', event.data);
+        };
+    </script>
+</body>
+</html>
